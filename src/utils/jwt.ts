@@ -7,3 +7,10 @@ export const generateJWT = (payload: JwtPayload) => {
 
   return token;
 };
+
+export const verifyToken = (token: string):JwtPayload => {
+
+  const result = jwt.verify(token, process.env.JWT_SECRET,{ complete: true });
+
+  return result;
+};

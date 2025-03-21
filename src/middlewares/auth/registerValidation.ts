@@ -1,6 +1,7 @@
 import { body, validationResult } from "express-validator";
-import { Request, Response, NextFunction } from "express";
-
+import { verifyToken } from "../../utils/jwt";
+import IToken from "../../interfaces/auth/IToken";
+import { JwtPayload } from "jsonwebtoken";
 // Middleware de validación para las operaciones de SpecialPrice
 export const validateBodyAuth = {
   // Validación para crear y actualizar SpecialPrice
@@ -46,6 +47,36 @@ export const validateBodyAuth = {
         return res.status(400).json({ errors: errors.array() });
       }
       next();
+    },
+  ],
+  getUser: [
+    (req, res, next) => {
+      // Verificar si el token está presente en los headers
+      const bearer = req.headers.authorization;
+      if (!bearer) {
+        return res
+          .status(401)
+          .json({ error: "Token requerido en la cabecera Authorization." });
+      }
+
+      const [, token] = bearer.split(" ");
+
+      if (!token) {
+        return res
+          .status(401)
+          .json({ error: "Token requerido en la cabecera Authorization." });
+      }
+
+      try {
+        const decoded = verifyToken(token); // Asegurar que es un objeto
+        if (!decoded || typeof decoded === "string") {
+          throw new Error("Token inválido");
+        }
+        req.user_id = decoded.payload.id;
+        next();
+      } catch (error) {
+        return res.status(401).json({ error: "Token invalido." });
+      }
     },
   ],
 };

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/User";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateJWT } from "../utils/jwt";
+import { AuthRequest } from "../interfaces/auth/IGetUser";
 
 export const createAccount = async (
   req: Request,
@@ -65,4 +66,19 @@ export const loginAccount = async (
     res.status(500).json({ message: err.message, status: 500 });
     return;
   }
+};
+
+export const getUser = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
+  var user = await User.findOne({ _id: req.user_id }).select(
+    "name handle email"
+  );
+  if (!user) {
+    const error = new Error("El usuario no exito");
+    res.status(409).json({ message: error.message, status: 404 });
+    return;
+  }
+  res.status(200).json({ message: "Usuario autenticado", status: 200, user });
 };
