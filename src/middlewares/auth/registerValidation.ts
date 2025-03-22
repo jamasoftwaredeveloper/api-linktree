@@ -49,7 +49,7 @@ export const validateBodyAuth = {
       next();
     },
   ],
-  getUser: [
+  authorization: [
     (req, res, next) => {
       // Verificar si el token está presente en los headers
       const bearer = req.headers.authorization;
@@ -79,4 +79,23 @@ export const validateBodyAuth = {
       }
     },
   ],
+    // Validación para crear y actualizar SpecialPrice
+    updateUser: [
+      body("handle")
+        .isLength({ min: 6 })
+        .withMessage("El handle, debe ser minimo 6 caracteres")
+        .notEmpty()
+        .withMessage("El handle, no debe estar vacio.")
+        .isLength({ max: 40 })
+        .withMessage("El handle, debe ser maximo 40 caracteres"),
+      body("description"),
+    //  body("description"),
+      (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+        next();
+      },
+    ],
 };

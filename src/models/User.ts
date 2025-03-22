@@ -6,8 +6,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase:true,
-    unique:true
+    lowercase: true,
+    unique: true,
   },
   name: {
     type: String,
@@ -19,12 +19,16 @@ const userSchema = new Schema({
     required: true,
     trim: true,
     unique: true,
-    lowercase:true
+    lowercase: true,
   },
   password: {
     type: String,
     required: true,
     trim: true,
+  },
+  description: {
+    type: String,
+    default: "",
   },
 });
 
