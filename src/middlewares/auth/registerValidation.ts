@@ -56,7 +56,7 @@ export const validateBodyAuth = {
       if (!bearer) {
         return res
           .status(401)
-          .json({ error: "Token requerido en la cabecera Authorization." });
+          .json({ message: "Token requerido en la cabecera Authorization." });
       }
 
       const [, token] = bearer.split(" ");
@@ -64,7 +64,7 @@ export const validateBodyAuth = {
       if (!token) {
         return res
           .status(401)
-          .json({ error: "Token requerido en la cabecera Authorization." });
+          .json({ message: "Token requerido en la cabecera Authorization." });
       }
 
       try {

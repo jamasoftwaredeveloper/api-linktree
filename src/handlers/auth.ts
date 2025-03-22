@@ -29,11 +29,11 @@ export const createAccount = async (
     // res.render -> envia datos a una vista (anteriormente)
     res
       .status(201)
-      .json({ message: "Creado exitosamente el usuario", status: 201 });
+      .json({ message: "Creado exitosamente el usuario"});
     // Opción2
     // await User.create(req.body);
   } catch (err) {
-    res.status(500).json({ message: err.message, status: 500 });
+    res.status(500).json({ message: err.message });
     return;
   }
 };
@@ -49,21 +49,21 @@ export const loginAccount = async (
 
     if (!user) {
       const error = new Error("El email no concide con ningún usuario.");
-      res.status(404).json({ message: error.message, status: 401 });
+      res.status(404).json({ message: error.message });
       return;
     }
     const resultCheckPassword = await checkPassword(password, user.password);
 
     if (!resultCheckPassword) {
       const error = new Error("Revisar el correo o la contraseña, no validas");
-      res.status(401).json({ message: error.message, status: 401 });
+      res.status(401).json({ message: error.message });
       return;
     }
     const token = generateJWT({ id: user._id, email: user.email });
 
-    res.status(200).json({ message: "Autenticado..", status: 200, token });
+    res.status(200).json({ message: "Autenticado..", token });
   } catch (err) {
-    res.status(500).json({ message: err.message, status: 500 });
+    res.status(500).json({ message: err.message });
     return;
   }
 };
@@ -80,5 +80,5 @@ export const getUser = async (
     res.status(409).json({ message: error.message, status: 404 });
     return;
   }
-  res.status(200).json({ message: "Usuario autenticado", status: 200, user });
+  res.status(200).json({ message: "Usuario autentica", user });
 };
