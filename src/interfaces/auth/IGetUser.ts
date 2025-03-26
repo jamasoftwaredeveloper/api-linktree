@@ -6,5 +6,5 @@ export interface AuthRequest extends Request {
 }
 
 export interface ProfileRequest extends Request {
-  user: Omit<IUser, 'name' | 'password'>; // Agregamos `user` con el tipo `IToken`
+  user: Omit<IUser, "name" | "password">; // Agregamos `user` con el tipo `IToken`
 }

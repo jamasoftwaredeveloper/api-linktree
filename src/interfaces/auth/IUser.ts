@@ -6,6 +6,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   description: string;
+  image: string;
 }
 
 export default IUser;

@@ -30,6 +30,10 @@ const userSchema = new Schema({
     type: String,
     default: "",
   },
+  image: {
+    type: String,
+    default: "",
+  },
 });
 
 const User = mongoose.model<IUser>("User", userSchema);

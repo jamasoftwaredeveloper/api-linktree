@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createAccount, loginAccount, getUser, updateUser, uploadImage } from "../handlers/auth";
+import { createAccount, loginAccount, getUser, updateUser, uploadImage } from "../handlers";
 import { validateBodyAuth } from "../middlewares/auth/registerValidation";
 
 const router = Router();

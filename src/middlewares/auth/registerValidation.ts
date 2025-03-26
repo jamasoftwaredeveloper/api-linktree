@@ -2,6 +2,7 @@ import { body, validationResult } from "express-validator";
 import { verifyToken } from "../../utils/jwt";
 import IToken from "../../interfaces/auth/IToken";
 import { JwtPayload } from "jsonwebtoken";
+import User from "../../models/User";
 // Middleware de validación para las operaciones de SpecialPrice
 export const validateBodyAuth = {
   // Validación para crear y actualizar SpecialPrice
@@ -72,7 +73,7 @@ export const validateBodyAuth = {
         if (!decoded || typeof decoded === "string") {
           throw new Error("Token inválido");
         }
-        req.user_id = decoded.payload.id;
+        req.user_id = decoded.payload.id;      
         next();
       } catch (error) {
         return res.status(401).json({ error: "Token invalido." });
